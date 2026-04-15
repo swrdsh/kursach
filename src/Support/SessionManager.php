@@ -1,0 +1,57 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Support;
+
+final class SessionManager
+{
+    public function has(string $key): bool
+    {
+        return array_key_exists($key, $_SESSION);
+    }
+
+    public function get(string $key, mixed $default = null): mixed
+    {
+        return $_SESSION[$key] ?? $default;
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        $_SESSION[$key] = $value;
+    }
+
+    public function remove(string $key): void
+    {
+        unset($_SESSION[$key]);
+    }
+
+    public function regenerate(): void
+    {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
+    }
+
+    public function destroy(): void
+    {
+        $_SESSION = [];
+
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            if (ini_get('session.use_cookies')) {
+                $params = session_get_cookie_params();
+                setcookie(
+                    session_name(),
+                    '',
+                    time() - 42000,
+                    $params['path'],
+                    $params['domain'],
+                    $params['secure'],
+                    $params['httponly']
+                );
+            }
+
+            session_destroy();
+        }
+    }
+}
+
