@@ -1,9 +1,15 @@
 <?php
 declare(strict_types=1);
 
+$heading = (string) ($contentData['heading'] ?? 'Форма оборудования');
+$descriptionText = (string) ($contentData['descriptionText'] ?? '');
+$formAction = (string) ($contentData['formAction'] ?? 'add_item.php');
+$submitLabel = (string) ($contentData['submitLabel'] ?? 'Сохранить');
+$backLink = (string) ($contentData['backLink'] ?? 'admin_panel.php');
 $messageType = (string) ($contentData['messageType'] ?? '');
 $messageText = (string) ($contentData['messageText'] ?? '');
 $old = $contentData['old'] ?? [];
+$csrfToken = (string) ($contentData['csrfToken'] ?? '');
 ?>
 <div class="row justify-content-center">
     <div class="col-xl-8">
@@ -11,10 +17,10 @@ $old = $contentData['old'] ?? [];
             <div class="card-header auth-header">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                     <div>
-                        <h1 class="h3 mb-1">Новое оборудование</h1>
-                        <p class="mb-0 opacity-75">Добавление записи в реестр инвентаризации.</p>
+                        <h1 class="h3 mb-1"><?= h($heading) ?></h1>
+                        <p class="mb-0 opacity-75"><?= h($descriptionText) ?></p>
                     </div>
-                    <a href="admin_panel.php" class="btn btn-light">← Назад</a>
+                    <a href="<?= h($backLink) ?>" class="btn btn-light">← Назад</a>
                 </div>
             </div>
             <div class="card-body p-4 p-lg-5">
@@ -24,7 +30,8 @@ $old = $contentData['old'] ?? [];
                     </div>
                 <?php endif; ?>
 
-                <form method="POST" action="add_item.php" class="row g-3">
+                <form method="POST" action="<?= h($formAction) ?>" class="row g-3">
+                    <input type="hidden" name="csrf_token" value="<?= h($csrfToken) ?>">
                     <div class="col-md-6">
                         <label for="inventory_number" class="form-label">Инвентарный номер</label>
                         <input id="inventory_number" type="text" name="inventory_number" class="form-control" value="<?= h((string) ($old['inventory_number'] ?? '')) ?>" required>
@@ -58,8 +65,8 @@ $old = $contentData['old'] ?? [];
                         <textarea id="description" name="description" class="form-control form-control--area" placeholder="Краткое описание состояния, комплектации или назначения"><?= h((string) ($old['description'] ?? '')) ?></textarea>
                     </div>
                     <div class="col-12 d-flex flex-wrap gap-2">
-                        <button type="submit" class="btn btn-success px-4">Сохранить запись</button>
-                        <a href="index.php" class="btn btn-outline-secondary">Открыть главную</a>
+                        <button type="submit" class="btn btn-success px-4"><?= h($submitLabel) ?></button>
+                        <a href="manage_items.php" class="btn btn-outline-secondary">Управление оборудованием</a>
                     </div>
                 </form>
             </div>

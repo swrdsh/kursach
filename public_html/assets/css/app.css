@@ -242,6 +242,19 @@ body {
     color: #0f5132;
 }
 
+.pagination-store .page-link {
+    border-radius: 0.9rem;
+    margin: 0 0.2rem;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    color: var(--text);
+}
+
+.pagination-store .page-item.active .page-link {
+    background: #172033;
+    border-color: #172033;
+    color: #ffffff;
+}
+
 @media (max-width: 767.98px) {
     .hero-card,
     .profile-card,

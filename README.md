@@ -15,6 +15,11 @@ Implemented in an object-oriented style:
 - equipment creation form for the office inventory registry
 - public equipment listing with XSS-safe output
 - equipment request flow for users and joined admin order view
+- full CRUD for equipment with edit and safe delete
+- CSRF token protection for destructive actions
+- pagination and search on the public catalog
+- data seeder with CSV backup export
+- equipment history log for create/update/delete actions
 - logout flow
 - dynamic navigation for guest and authorized users
 
@@ -37,3 +42,10 @@ Initialization flow:
 4. Open `/setup_inventory.php?token=YOUR_PRIVATE_TOKEN`
 5. Open `/setup_orders.php?token=YOUR_PRIVATE_TOKEN`
 6. After that the authentication module, equipment registry, and request flow are ready for testing
+
+Main admin pages:
+
+- `/admin_panel.php` - admin landing page
+- `/manage_items.php` - search, edit, and delete equipment
+- `/admin_orders.php` - joined list of user requests
+- `/admin_seeder.php` - CSV backup plus bulk data generation

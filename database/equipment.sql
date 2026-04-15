@@ -15,3 +15,18 @@ CREATE TABLE IF NOT EXISTS `equipment` (
   UNIQUE KEY `inventory_number_unique` (`inventory_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `equipment_history` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `equipment_id` INT(11) DEFAULT NULL COMMENT 'ID оборудования, если запись ещё существует',
+  `action` ENUM('create', 'update', 'delete') NOT NULL COMMENT 'Тип изменения',
+  `inventory_number` VARCHAR(50) NOT NULL COMMENT 'Инвентарный номер на момент изменения',
+  `title` VARCHAR(255) NOT NULL COMMENT 'Название на момент изменения',
+  `change_reason` VARCHAR(255) DEFAULT NULL COMMENT 'Причина списания или комментарий',
+  `snapshot_json` LONGTEXT DEFAULT NULL COMMENT 'Снимок данных в JSON',
+  `changed_by_user_id` INT(11) DEFAULT NULL COMMENT 'Кто выполнил действие',
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `equipment_history_equipment_idx` (`equipment_id`),
+  KEY `equipment_history_user_idx` (`changed_by_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

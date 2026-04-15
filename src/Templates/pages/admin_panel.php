@@ -6,11 +6,13 @@ declare(strict_types=1);
         <div>
             <span class="hero-badge">RBAC</span>
             <h1 class="display-6 fw-bold mt-3 mb-2">Панель администратора</h1>
-            <p class="text-secondary mb-0">Закрытая зона для управления карточками офисного оборудования.</p>
+            <p class="text-secondary mb-0">Закрытая зона для полного управления инвентаризацией и пользовательскими заявками.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
             <a href="add_item.php" class="btn btn-primary">Добавить запись</a>
+            <a href="manage_items.php" class="btn btn-outline-primary">Управление</a>
             <a href="admin_orders.php" class="btn btn-outline-primary">Заявки</a>
+            <a href="admin_seeder.php" class="btn btn-outline-secondary">Сидер</a>
             <a href="index.php" class="btn btn-outline-secondary">На главную</a>
             <a href="logout.php" class="btn btn-outline-danger">Выйти</a>
         </div>
@@ -21,22 +23,23 @@ declare(strict_types=1);
     <div class="col-md-4">
         <article class="stage-card h-100">
             <div class="stage-number">01</div>
-            <h2 class="h5">Права доступа</h2>
-            <p class="mb-0 text-secondary">Страницы `admin_panel.php` и `add_item.php` доступны только пользователям с ролью `admin`.</p>
+            <h2 class="h5">CRUD оборудования</h2>
+            <p class="mb-0 text-secondary">Администратор может добавлять, искать, редактировать и списывать любую запись оборудования.</p>
         </article>
     </div>
     <div class="col-md-4">
         <article class="stage-card h-100">
             <div class="stage-number">02</div>
-            <h2 class="h5">Создание записей</h2>
-            <p class="mb-0 text-secondary">Администратор добавляет оборудование с инвентарным номером, кабинетом, типом техники и стоимостью.</p>
+            <h2 class="h5">Заявки пользователей</h2>
+            <p class="mb-0 text-secondary">Страница <code>admin_orders.php</code> собирает заявки через JOIN и показывает клиента, оборудование и статус.</p>
         </article>
     </div>
     <div class="col-md-4">
         <article class="stage-card h-100">
             <div class="stage-number">03</div>
-            <h2 class="h5">Заявки пользователей</h2>
-            <p class="mb-0 text-secondary">Страница `admin_orders.php` собирает заявки через JOIN и показывает, кто и на какое оборудование оставил запрос.</p>
+            <h2 class="h5">Стресс-тест данных</h2>
+            <p class="mb-0 text-secondary">Seeder создаёт CSV-бэкап и массово генерирует записи для проверки пагинации и поиска.</p>
         </article>
     </div>
 </section>
+

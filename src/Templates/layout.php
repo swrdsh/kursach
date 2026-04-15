@@ -41,7 +41,13 @@ $currentUser = $authService->getCurrentUser();
                                     <a class="nav-link" href="admin_panel.php">Админка</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="manage_items.php">Оборудование</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="admin_orders.php">Заявки</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="admin_seeder.php">Сидер</a>
                                 </li>
                             <?php endif; ?>
                             <li class="nav-item">
@@ -64,3 +70,4 @@ $currentUser = $authService->getCurrentUser();
     </div>
 </body>
 </html>
+

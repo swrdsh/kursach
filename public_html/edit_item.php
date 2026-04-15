@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 require __DIR__ . '/check_admin.php';
 
+$id = max(0, (int) ($_GET['id'] ?? $_POST['id'] ?? 0));
+$item = $equipmentService->findById($id);
+
+if ($item === null) {
+    http_response_code(404);
+    exit('Оборудование не найдено.');
+}
+
 $messageType = '';
 $messageText = '';
-$old = [
-    'inventory_number' => '',
-    'title' => '',
-    'equipment_type' => '',
-    'room_name' => '',
-    'responsible_person' => '',
-    'purchase_cost' => '',
-    'image_url' => '',
-    'description' => '',
-];
+$old = $item;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!hash_equals($_SESSION['csrf_token'], (string) ($_POST['csrf_token'] ?? ''))) {
@@ -23,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $old = [
+        'id' => $id,
         'inventory_number' => trim((string) ($_POST['inventory_number'] ?? '')),
         'title' => trim((string) ($_POST['title'] ?? '')),
         'equipment_type' => trim((string) ($_POST['equipment_type'] ?? '')),
@@ -34,32 +34,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $currentUser = $authService->getCurrentUser();
-    $result = $equipmentService->create($_POST, $currentUser !== null ? (int) $currentUser['id'] : null);
-    $messageType = $result['success'] === true ? 'success' : 'error';
-    $messageText = $result['message'];
+    $result = $equipmentService->update($id, $_POST, $currentUser !== null ? (int) $currentUser['id'] : null);
 
     if ($result['success'] === true) {
-        $old = [
-            'inventory_number' => '',
-            'title' => '',
-            'equipment_type' => '',
-            'room_name' => '',
-            'responsible_person' => '',
-            'purchase_cost' => '',
-            'image_url' => '',
-            'description' => '',
-        ];
+        header('Location: manage_items.php?updated=1');
+        exit;
     }
+
+    $messageType = 'error';
+    $messageText = $result['message'];
 }
 
 $view->render('equipment_form', [
-    'title' => 'Office Inventory | Добавить запись',
-    'mode' => 'create',
-    'heading' => 'Новое оборудование',
-    'descriptionText' => 'Добавление записи в реестр инвентаризации.',
-    'formAction' => 'add_item.php',
-    'submitLabel' => 'Сохранить запись',
-    'backLink' => 'admin_panel.php',
+    'title' => 'Office Inventory | Редактировать оборудование',
+    'mode' => 'edit',
+    'heading' => 'Редактирование оборудования',
+    'descriptionText' => 'Измените данные выбранной записи и сохраните правки.',
+    'formAction' => 'edit_item.php?id=' . $id,
+    'submitLabel' => 'Обновить запись',
+    'backLink' => 'manage_items.php',
     'messageType' => $messageType,
     'messageText' => $messageText,
     'old' => $old,
