@@ -19,7 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $authService->login($_POST);
 
     if ($result['success'] === true) {
-        header('Location: profile.php');
+        if ($authService->isAdmin()) {
+            header('Location: admin_panel.php');
+        } else {
+            header('Location: index.php');
+        }
         exit;
     }
 
@@ -31,4 +35,3 @@ $view->render('login', [
     'errorMessage' => $errorMessage,
     'old' => $old,
 ]);
-

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 $user = $authService->getCurrentUser();
+$items = $contentData['items'] ?? [];
 ?>
 <section class="hero-card mb-4">
     <div class="row g-4 align-items-center">
@@ -9,16 +10,21 @@ $user = $authService->getCurrentUser();
             <span class="hero-badge">Курсовой проект</span>
             <h1 class="display-5 fw-bold mt-3 mb-3">Инвентаризация офисного оборудования</h1>
             <p class="lead text-secondary mb-4">
-                Первый этап реализует подсистему аутентификации: регистрацию, безопасное хранение паролей,
-                вход через сессию и защищенный профиль пользователя.
+                Публичная витрина показывает оборудование офиса, а администратор может добавлять новые позиции
+                в реестр и управлять наполнением системы через защищенную админ-панель.
             </p>
             <div class="d-flex flex-wrap gap-3">
                 <?php if ($user === null): ?>
-                    <a class="btn btn-primary btn-lg" href="register.php">Создать аккаунт</a>
-                    <a class="btn btn-outline-secondary btn-lg" href="login.php">Войти</a>
+                    <a class="btn btn-primary btn-lg" href="login.php">Войти</a>
+                    <a class="btn btn-outline-secondary btn-lg" href="register.php">Регистрация</a>
                 <?php else: ?>
-                    <a class="btn btn-primary btn-lg" href="profile.php">Открыть профиль</a>
-                    <a class="btn btn-outline-secondary btn-lg" href="logout.php">Выйти</a>
+                    <?php if ($authService->isAdmin()): ?>
+                        <a class="btn btn-primary btn-lg" href="admin_panel.php">Открыть админку</a>
+                        <a class="btn btn-outline-secondary btn-lg" href="add_item.php">Добавить оборудование</a>
+                    <?php else: ?>
+                        <a class="btn btn-primary btn-lg" href="profile.php">Открыть профиль</a>
+                        <a class="btn btn-outline-secondary btn-lg" href="logout.php">Выйти</a>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>
@@ -26,38 +32,59 @@ $user = $authService->getCurrentUser();
             <div class="info-panel">
                 <h2 class="h4 mb-3">Что уже готово</h2>
                 <ul class="feature-list mb-0">
-                    <li>PDO-подключение к MySQL через `db.php`</li>
-                    <li>Таблица `users` с ролями `admin` и `client`</li>
-                    <li>Хеширование пароля через `password_hash()`</li>
-                    <li>Авторизация через `password_verify()` и сессии</li>
-                    <li>Меню, зависящее от состояния пользователя</li>
+                    <li>RBAC: админ попадает в закрытую панель, клиент остаётся в публичной части</li>
+                    <li>Проверка роли через `check_admin.php` и middleware-guard</li>
+                    <li>Таблица `equipment` для инвентарного оборудования офиса</li>
+                    <li>Форма добавления новых записей для администратора</li>
+                    <li>Безопасный вывод карточек с экранированием данных от XSS</li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
 
-<section class="row g-4">
-    <div class="col-md-4">
-        <article class="stage-card h-100">
-            <div class="stage-number">01</div>
-            <h3 class="h5">Регистрация</h3>
-            <p class="mb-0 text-secondary">Проверка email, совпадения паролей и защита от дублей по уникальному полю.</p>
-        </article>
+<section class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+    <div>
+        <h2 class="section-title mb-2">Реестр оборудования</h2>
+        <p class="text-secondary mb-0">Новые записи выводятся сверху. Карточки отображаются безопасно, даже если в тексте есть HTML-теги.</p>
     </div>
-    <div class="col-md-4">
-        <article class="stage-card h-100">
-            <div class="stage-number">02</div>
-            <h3 class="h5">Авторизация</h3>
-            <p class="mb-0 text-secondary">Вход по email и паролю с хранением идентификатора пользователя в сессии.</p>
-        </article>
-    </div>
-    <div class="col-md-4">
-        <article class="stage-card h-100">
-            <div class="stage-number">03</div>
-            <h3 class="h5">Защищенный профиль</h3>
-            <p class="mb-0 text-secondary">Доступ к странице профиля есть только после успешной аутентификации.</p>
-        </article>
-    </div>
+    <?php if ($authService->isAdmin()): ?>
+        <a class="btn btn-outline-primary" href="add_item.php">Добавить новую запись</a>
+    <?php endif; ?>
 </section>
 
+<section class="row g-4">
+    <?php if ($items === []): ?>
+        <div class="col-12">
+            <div class="empty-state">
+                <h3 class="h4 mb-2">Записей пока нет</h3>
+                <p class="text-secondary mb-0">Зайдите под администратором и добавьте первое оборудование через админ-панель.</p>
+            </div>
+        </div>
+    <?php else: ?>
+        <?php foreach ($items as $item): ?>
+            <div class="col-md-6 col-xl-4">
+                <article class="equipment-card h-100">
+                    <img
+                        src="<?= h((string) ($item['image_url'] ?: 'https://placehold.co/900x600/e9eef6/1f2937?text=Equipment')) ?>"
+                        alt="<?= h((string) $item['title']) ?>"
+                        class="equipment-card__image"
+                    >
+                    <div class="equipment-card__body">
+                        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                            <span class="equipment-chip"><?= h((string) ($item['equipment_type'] ?: 'Тип не указан')) ?></span>
+                            <span class="equipment-id"><?= h((string) $item['inventory_number']) ?></span>
+                        </div>
+                        <h3 class="h5 mb-2"><?= h((string) $item['title']) ?></h3>
+                        <p class="text-secondary mb-3"><?= h((string) ($item['description'] ?: 'Описание отсутствует.')) ?></p>
+                        <div class="equipment-meta">
+                            <div><strong>Кабинет:</strong> <?= h((string) ($item['room_name'] ?: 'Не указан')) ?></div>
+                            <div><strong>МОЛ:</strong> <?= h((string) ($item['responsible_person'] ?: 'Не назначено')) ?></div>
+                            <div><strong>Стоимость:</strong> <?= h((string) ($item['purchase_cost'] !== null ? $item['purchase_cost'] . ' ₽' : 'Не указана')) ?></div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</section>

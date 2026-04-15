@@ -121,4 +121,9 @@ final class AuthService
     {
         return $this->sessionManager->get(self::ROLE_SESSION_KEY);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->isAuthenticated() && $this->getCurrentRole() === 'admin';
+    }
 }

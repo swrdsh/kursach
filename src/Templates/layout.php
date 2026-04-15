@@ -36,6 +36,11 @@ $currentUser = $authService->getCurrentUser();
                                 <a class="nav-link" href="register.php">Регистрация</a>
                             </li>
                         <?php else: ?>
+                            <?php if ($authService->isAdmin()): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="admin_panel.php">Админка</a>
+                                </li>
+                            <?php endif; ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="profile.php">Профиль</a>
                             </li>
@@ -56,4 +61,3 @@ $currentUser = $authService->getCurrentUser();
     </div>
 </body>
 </html>
-

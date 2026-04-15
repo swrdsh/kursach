@@ -6,9 +6,13 @@ Implemented in an object-oriented style:
 
 - PDO bootstrap through `db.php`
 - `users` table schema in `database/schema.sql`
+- `equipment` table schema in `database/equipment.sql`
 - secure registration with password hashing
 - login with sessions and `password_verify`
 - protected profile page
+- protected admin pages with RBAC
+- equipment creation form for the office inventory registry
+- public equipment listing with XSS-safe output
 - logout flow
 - dynamic navigation for guest and authorized users
 
@@ -28,4 +32,5 @@ Initialization flow:
 1. Open `db.example.php`, set database credentials and a private `setup_token`
 2. Save the file as `db.php`
 3. Open `/setup.php?token=YOUR_PRIVATE_TOKEN`
-4. After that the authentication module is ready for registration and login tests
+4. Open `/setup_inventory.php?token=YOUR_PRIVATE_TOKEN`
+5. After that the authentication module and equipment registry are ready for testing
