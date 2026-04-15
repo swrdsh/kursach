@@ -40,6 +40,9 @@ $currentUser = $authService->getCurrentUser();
                                 <li class="nav-item">
                                     <a class="nav-link" href="admin_panel.php">Админка</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="admin_orders.php">Заявки</a>
+                                </li>
                             <?php endif; ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="profile.php">Профиль</a>

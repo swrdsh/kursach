@@ -10,6 +10,7 @@ declare(strict_types=1);
         </div>
         <div class="d-flex flex-wrap gap-2">
             <a href="add_item.php" class="btn btn-primary">Добавить запись</a>
+            <a href="admin_orders.php" class="btn btn-outline-primary">Заявки</a>
             <a href="index.php" class="btn btn-outline-secondary">На главную</a>
             <a href="logout.php" class="btn btn-outline-danger">Выйти</a>
         </div>
@@ -34,9 +35,8 @@ declare(strict_types=1);
     <div class="col-md-4">
         <article class="stage-card h-100">
             <div class="stage-number">03</div>
-            <h2 class="h5">Публичная витрина</h2>
-            <p class="mb-0 text-secondary">Все добавленные позиции сразу отображаются на главной странице карточками для просмотра.</p>
+            <h2 class="h5">Заявки пользователей</h2>
+            <p class="mb-0 text-secondary">Страница `admin_orders.php` собирает заявки через JOIN и показывает, кто и на какое оборудование оставил запрос.</p>
         </article>
     </div>
 </section>
-

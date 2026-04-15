@@ -23,6 +23,22 @@ final class EquipmentRepository
         return $statement->fetchAll();
     }
 
+    public function findById(int $id): ?array
+    {
+        $statement = $this->pdo->prepare(
+            'SELECT id, inventory_number, title, description, equipment_type, room_name, responsible_person, purchase_cost, image_url, created_at
+             FROM equipment
+             WHERE id = :id
+             LIMIT 1'
+        );
+        $statement->execute([
+            'id' => $id,
+        ]);
+        $item = $statement->fetch();
+
+        return $item === false ? null : $item;
+    }
+
     public function existsByInventoryNumber(string $inventoryNumber): bool
     {
         $statement = $this->pdo->prepare(
@@ -73,4 +89,3 @@ final class EquipmentRepository
         return (int) $this->pdo->lastInsertId();
     }
 }
-

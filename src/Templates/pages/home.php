@@ -35,8 +35,9 @@ $items = $contentData['items'] ?? [];
                     <li>RBAC: админ попадает в закрытую панель, клиент остаётся в публичной части</li>
                     <li>Проверка роли через `check_admin.php` и middleware-guard</li>
                     <li>Таблица `equipment` для инвентарного оборудования офиса</li>
-                    <li>Форма добавления новых записей для администратора</li>
-                    <li>Безопасный вывод карточек с экранированием данных от XSS</li>
+                    <li>Пользователь может оформить заявку на оборудование прямо с витрины</li>
+                    <li>Страница `admin_orders.php` собирает заявки через SQL JOIN</li>
+                    <li>Безопасный вывод карточек и защита логики от мусорных `id` и повторов</li>
                 </ul>
             </div>
         </div>
@@ -81,6 +82,16 @@ $items = $contentData['items'] ?? [];
                             <div><strong>Кабинет:</strong> <?= h((string) ($item['room_name'] ?: 'Не указан')) ?></div>
                             <div><strong>МОЛ:</strong> <?= h((string) ($item['responsible_person'] ?: 'Не назначено')) ?></div>
                             <div><strong>Стоимость:</strong> <?= h((string) ($item['purchase_cost'] !== null ? $item['purchase_cost'] . ' ₽' : 'Не указана')) ?></div>
+                        </div>
+                        <div class="mt-4 d-flex flex-wrap gap-2">
+                            <a href="make_order.php?id=<?= h((string) $item['id']) ?>" class="btn btn-primary">Оформить заявку</a>
+                            <?php if ($user === null): ?>
+                                <a href="login.php" class="btn btn-outline-secondary">Войти</a>
+                            <?php elseif ($authService->isAdmin()): ?>
+                                <a href="admin_orders.php" class="btn btn-outline-secondary">Открыть заявки</a>
+                            <?php else: ?>
+                                <a href="profile.php" class="btn btn-outline-secondary">Профиль</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </article>
