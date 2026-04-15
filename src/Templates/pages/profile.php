@@ -8,9 +8,9 @@ $user = $contentData['user'] ?? null;
         <div class="profile-card shadow-lg border-0">
             <div class="profile-card__header">
                 <div>
-                    <span class="hero-badge">Защищенная страница</span>
+                    <span class="eyebrow eyebrow--dark">Защищённая страница</span>
                     <h1 class="h2 mt-3 mb-2">Профиль пользователя</h1>
-                    <p class="text-secondary mb-0">Доступ к этой странице открывается только после успешного входа в систему.</p>
+                    <p class="text-secondary mb-0">Здесь отображаются данные текущего пользователя и роль доступа в системе.</p>
                 </div>
                 <span class="role-chip"><?= htmlspecialchars((string) ($user['role'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></span>
             </div>
@@ -44,4 +44,3 @@ $user = $contentData['user'] ?? null;
         </div>
     </div>
 </section>
-

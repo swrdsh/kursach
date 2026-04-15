@@ -4,9 +4,9 @@ declare(strict_types=1);
 <section class="admin-hero mb-4">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
         <div>
-            <span class="hero-badge">RBAC</span>
+            <span class="eyebrow eyebrow--dark">RBAC</span>
             <h1 class="display-6 fw-bold mt-3 mb-2">Панель администратора</h1>
-            <p class="text-secondary mb-0">Закрытая зона для полного управления инвентаризацией и пользовательскими заявками.</p>
+            <p class="text-secondary mb-0">Закрытая зона для управления инвентаризацией, заявками и тестовыми данными.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
             <a href="add_item.php" class="btn btn-primary">Добавить запись</a>
@@ -24,22 +24,21 @@ declare(strict_types=1);
         <article class="stage-card h-100">
             <div class="stage-number">01</div>
             <h2 class="h5">CRUD оборудования</h2>
-            <p class="mb-0 text-secondary">Администратор может добавлять, искать, редактировать и списывать любую запись оборудования.</p>
+            <p class="mb-0 text-secondary">Добавление, поиск, редактирование и списание техники из активного реестра.</p>
         </article>
     </div>
     <div class="col-md-4">
         <article class="stage-card h-100">
             <div class="stage-number">02</div>
             <h2 class="h5">Заявки пользователей</h2>
-            <p class="mb-0 text-secondary">Страница <code>admin_orders.php</code> собирает заявки через JOIN и показывает клиента, оборудование и статус.</p>
+            <p class="mb-0 text-secondary">Сводная таблица собирает данные через JOIN и показывает пользователя, оборудование и статус.</p>
         </article>
     </div>
     <div class="col-md-4">
         <article class="stage-card h-100">
             <div class="stage-number">03</div>
             <h2 class="h5">Стресс-тест данных</h2>
-            <p class="mb-0 text-secondary">Seeder создаёт CSV-бэкап и массово генерирует записи для проверки пагинации и поиска.</p>
+            <p class="mb-0 text-secondary">Сидер создаёт CSV-бэкап и массово генерирует записи для проверки пагинации и поиска.</p>
         </article>
     </div>
 </section>
-

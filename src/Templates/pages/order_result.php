@@ -33,4 +33,3 @@ $equipment = $contentData['equipment'] ?? null;
         </div>
     </div>
 </section>
-

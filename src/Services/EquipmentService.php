@@ -173,4 +173,3 @@ final class EquipmentService
         ];
     }
 }
-

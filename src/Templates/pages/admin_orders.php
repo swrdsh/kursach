@@ -6,9 +6,9 @@ $orders = $contentData['orders'] ?? [];
 <section class="admin-hero mb-4">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
         <div>
-            <span class="hero-badge">JOIN</span>
+            <span class="eyebrow eyebrow--dark">JOIN</span>
             <h1 class="display-6 fw-bold mt-3 mb-2">Управление заявками</h1>
-            <p class="text-secondary mb-0">Сводный список показывает не ID, а реальные данные пользователей и оборудования.</p>
+            <p class="text-secondary mb-0">Сводный список показывает реальные данные пользователей и оборудования, а не только ID.</p>
         </div>
         <div class="d-flex flex-wrap gap-2">
             <a href="admin_panel.php" class="btn btn-outline-secondary">В админку</a>
@@ -59,4 +59,3 @@ $orders = $contentData['orders'] ?? [];
         <?php endif; ?>
     </div>
 </section>
-

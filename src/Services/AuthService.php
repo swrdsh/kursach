@@ -32,7 +32,7 @@ final class AuthService
         }
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            return ['success' => false, 'message' => 'Некорректный формат Email.'];
+            return ['success' => false, 'message' => 'Некорректный формат email.'];
         }
 
         if ($password !== $passwordConfirm) {
@@ -55,7 +55,7 @@ final class AuthService
             'role' => 'client',
         ]);
 
-        return ['success' => true, 'message' => 'Регистрация успешна! Теперь можно войти в систему.'];
+        return ['success' => true, 'message' => 'Регистрация успешна. Теперь можно войти в систему.'];
     }
 
     public function login(array $payload): array

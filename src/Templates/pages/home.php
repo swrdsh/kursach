@@ -8,121 +8,128 @@ $totalPages = (int) ($contentData['totalPages'] ?? 1);
 $totalRows = (int) ($contentData['totalRows'] ?? 0);
 $search = (string) ($contentData['search'] ?? '');
 ?>
-<section class="hero-card mb-4">
-    <div class="row g-4 align-items-center">
-        <div class="col-lg-7">
-            <span class="hero-badge">Курсовой проект</span>
-            <h1 class="display-5 fw-bold mt-3 mb-3">Инвентаризация офисного оборудования</h1>
-            <p class="lead text-secondary mb-4">
-                Публичная витрина показывает оборудование офиса, а администратор получает полный контроль:
-                добавление, редактирование, списание, поиск и постраничный вывод данных.
-            </p>
-            <div class="d-flex flex-wrap gap-3">
-                <?php if ($user === null): ?>
-                    <a class="btn btn-primary btn-lg" href="login.php">Войти</a>
-                    <a class="btn btn-outline-secondary btn-lg" href="register.php">Регистрация</a>
+<section class="hero-panel">
+    <div class="hero-panel__content">
+        <span class="eyebrow">Инвентаризация офиса</span>
+        <h1 class="hero-title">Единый реестр техники, заявок и ответственных лиц</h1>
+        <p class="hero-copy">
+            Система помогает учитывать офисное оборудование, фиксировать его местоположение,
+            видеть ответственных сотрудников и принимать заявки от пользователей через единый веб-интерфейс.
+        </p>
+        <div class="hero-actions">
+            <?php if ($user === null): ?>
+                <a class="btn btn-primary btn-lg" href="login.php">Войти в систему</a>
+                <a class="btn btn-outline-dark btn-lg" href="register.php">Создать аккаунт</a>
+            <?php else: ?>
+                <?php if ($authService->isAdmin()): ?>
+                    <a class="btn btn-primary btn-lg" href="manage_items.php">Открыть управление</a>
+                    <a class="btn btn-outline-dark btn-lg" href="admin_panel.php">Перейти в админку</a>
                 <?php else: ?>
-                    <?php if ($authService->isAdmin()): ?>
-                        <a class="btn btn-primary btn-lg" href="manage_items.php">Управлять оборудованием</a>
-                        <a class="btn btn-outline-secondary btn-lg" href="admin_seeder.php">Сидер данных</a>
-                    <?php else: ?>
-                        <a class="btn btn-primary btn-lg" href="profile.php">Открыть профиль</a>
-                        <a class="btn btn-outline-secondary btn-lg" href="logout.php">Выйти</a>
-                    <?php endif; ?>
+                    <a class="btn btn-primary btn-lg" href="profile.php">Перейти в профиль</a>
+                    <a class="btn btn-outline-dark btn-lg" href="logout.php">Выйти</a>
                 <?php endif; ?>
-            </div>
-        </div>
-        <div class="col-lg-5">
-            <div class="info-panel">
-                <h2 class="h4 mb-3">Что уже готово</h2>
-                <ul class="feature-list mb-0">
-                    <li>Полный CRUD для оборудования с админским доступом</li>
-                    <li>Безопасное удаление через POST, CSRF и подтверждение списания</li>
-                    <li>Публичная витрина с поиском и пагинацией по 10 записей</li>
-                    <li>Заявки пользователей и административная таблица на JOIN</li>
-                    <li>Генератор тестовых данных с CSV-бэкапом для стресс-теста</li>
-                </ul>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
-</section>
 
-<section class="card border-0 shadow-lg mb-4">
-    <div class="card-body p-4">
-        <form method="GET" action="index.php" class="row g-3 align-items-end">
-            <div class="col-lg-8">
-                <label for="q" class="form-label">Поиск по реестру</label>
-                <input id="q" type="text" name="q" class="form-control" value="<?= h($search) ?>" placeholder="Инвентарный номер, название, кабинет, МОЛ...">
-            </div>
-            <div class="col-lg-4 d-flex gap-2">
-                <button type="submit" class="btn btn-primary flex-grow-1">Найти</button>
-                <a href="index.php" class="btn btn-outline-secondary">Сбросить</a>
-            </div>
-        </form>
-    </div>
-</section>
-
-<section class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
-    <div>
-        <h2 class="section-title mb-2">Реестр оборудования</h2>
-        <p class="text-secondary mb-0">Всего записей: <?= h((string) $totalRows) ?>. На странице выводится по 10 карточек.</p>
-    </div>
-    <?php if ($authService->isAdmin()): ?>
-        <div class="d-flex flex-wrap gap-2">
-            <a class="btn btn-outline-primary" href="add_item.php">Добавить запись</a>
-            <a class="btn btn-outline-secondary" href="manage_items.php">Редактировать</a>
+    <aside class="hero-panel__stats">
+        <div class="stat-card">
+            <span class="stat-card__label">Всего записей</span>
+            <strong class="stat-card__value"><?= h((string) $totalRows) ?></strong>
         </div>
-    <?php endif; ?>
+        <div class="stat-card">
+            <span class="stat-card__label">Страница</span>
+            <strong class="stat-card__value"><?= h((string) $page) ?> / <?= h((string) $totalPages) ?></strong>
+        </div>
+        <div class="stat-card">
+            <span class="stat-card__label">Функции</span>
+            <strong class="stat-card__value">CRUD + JOIN + QR</strong>
+        </div>
+    </aside>
 </section>
 
-<section class="row g-4">
+<section class="search-panel">
+    <div class="search-panel__head">
+        <div>
+            <span class="eyebrow eyebrow--dark">Каталог оборудования</span>
+            <h2 class="section-title">Поиск и постраничный просмотр</h2>
+        </div>
+        <?php if ($authService->isAdmin()): ?>
+            <div class="hero-actions">
+                <a class="btn btn-outline-dark" href="add_item.php">Добавить запись</a>
+                <a class="btn btn-outline-dark" href="manage_items.php">Редактировать</a>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <form method="GET" action="index.php" class="search-form">
+        <div class="search-form__field">
+            <label for="q" class="form-label">Поиск по реестру</label>
+            <input id="q" type="text" name="q" class="form-control" value="<?= h($search) ?>" placeholder="Инвентарный номер, кабинет, тип техники, ответственное лицо">
+        </div>
+        <div class="search-form__actions">
+            <button type="submit" class="btn btn-primary">Найти</button>
+            <a href="index.php" class="btn btn-outline-dark">Сбросить</a>
+        </div>
+    </form>
+</section>
+
+<section class="catalog-grid">
     <?php if ($items === []): ?>
-        <div class="col-12">
-            <div class="empty-state">
-                <h3 class="h4 mb-2">Записи не найдены</h3>
-                <p class="text-secondary mb-0">Попробуйте изменить поисковый запрос или добавьте новое оборудование.</p>
-            </div>
+        <div class="empty-state">
+            <h3 class="empty-state__title">По вашему запросу ничего не найдено</h3>
+            <p class="empty-state__text">Измените критерии поиска или добавьте новое оборудование через административный раздел.</p>
         </div>
     <?php else: ?>
         <?php foreach ($items as $item): ?>
-            <div class="col-md-6 col-xl-4">
-                <article class="equipment-card h-100">
+            <article class="catalog-card">
+                <div class="catalog-card__image-wrap">
                     <img
-                        src="<?= h((string) ($item['image_url'] ?: 'https://placehold.co/900x600/e9eef6/1f2937?text=Equipment')) ?>"
+                        src="<?= h((string) ($item['image_url'] ?: 'https://placehold.co/900x600/f4efe5/2d2418?text=Inventory')) ?>"
                         alt="<?= h((string) $item['title']) ?>"
-                        class="equipment-card__image"
+                        class="catalog-card__image"
                     >
-                    <div class="equipment-card__body">
-                        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
-                            <span class="equipment-chip"><?= h((string) ($item['equipment_type'] ?: 'Тип не указан')) ?></span>
-                            <span class="equipment-id"><?= h((string) $item['inventory_number']) ?></span>
-                        </div>
-                        <h3 class="h5 mb-2"><?= h((string) $item['title']) ?></h3>
-                        <p class="text-secondary mb-3"><?= h((string) ($item['description'] ?: 'Описание отсутствует.')) ?></p>
-                        <div class="equipment-meta">
-                            <div><strong>Кабинет:</strong> <?= h((string) ($item['room_name'] ?: 'Не указан')) ?></div>
-                            <div><strong>МОЛ:</strong> <?= h((string) ($item['responsible_person'] ?: 'Не назначено')) ?></div>
-                            <div><strong>Стоимость:</strong> <?= h((string) ($item['purchase_cost'] !== null ? $item['purchase_cost'] . ' ₽' : 'Не указана')) ?></div>
-                        </div>
-                        <div class="mt-4 d-flex flex-wrap gap-2">
-                            <a href="make_order.php?id=<?= h((string) $item['id']) ?>" class="btn btn-primary">Оформить заявку</a>
-                            <?php if ($user === null): ?>
-                                <a href="login.php" class="btn btn-outline-secondary">Войти</a>
-                            <?php elseif ($authService->isAdmin()): ?>
-                                <a href="edit_item.php?id=<?= h((string) $item['id']) ?>" class="btn btn-outline-secondary">Редактировать</a>
-                            <?php else: ?>
-                                <a href="profile.php" class="btn btn-outline-secondary">Профиль</a>
-                            <?php endif; ?>
-                        </div>
+                    <span class="catalog-card__badge"><?= h((string) ($item['equipment_type'] ?: 'Тип не указан')) ?></span>
+                </div>
+
+                <div class="catalog-card__body">
+                    <div class="catalog-card__topline">
+                        <span class="catalog-card__inventory"><?= h((string) $item['inventory_number']) ?></span>
+                        <span class="catalog-card__cost"><?= h((string) ($item['purchase_cost'] !== null ? $item['purchase_cost'] . ' ₽' : 'Без цены')) ?></span>
                     </div>
-                </article>
-            </div>
+
+                    <h3 class="catalog-card__title"><?= h((string) $item['title']) ?></h3>
+                    <p class="catalog-card__description"><?= h((string) ($item['description'] ?: 'Описание отсутствует.')) ?></p>
+
+                    <dl class="catalog-card__meta">
+                        <div>
+                            <dt>Кабинет</dt>
+                            <dd><?= h((string) ($item['room_name'] ?: 'Не указан')) ?></dd>
+                        </div>
+                        <div>
+                            <dt>Ответственный</dt>
+                            <dd><?= h((string) ($item['responsible_person'] ?: 'Не назначен')) ?></dd>
+                        </div>
+                    </dl>
+
+                    <div class="catalog-card__actions">
+                        <a href="make_order.php?id=<?= h((string) $item['id']) ?>" class="btn btn-primary">Оформить заявку</a>
+                        <?php if ($user === null): ?>
+                            <a href="login.php" class="btn btn-outline-dark">Войти</a>
+                        <?php elseif ($authService->isAdmin()): ?>
+                            <a href="edit_item.php?id=<?= h((string) $item['id']) ?>" class="btn btn-outline-dark">Изменить</a>
+                        <?php else: ?>
+                            <a href="profile.php" class="btn btn-outline-dark">Профиль</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </article>
         <?php endforeach; ?>
     <?php endif; ?>
 </section>
 
 <?php if ($totalPages > 1): ?>
-    <nav class="mt-4">
+    <nav class="pagination-wrap">
         <ul class="pagination pagination-store justify-content-center">
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                 <li class="page-item <?= $i === $page ? 'active' : '' ?>">
@@ -132,4 +139,3 @@ $search = (string) ($contentData['search'] ?? '');
         </ul>
     </nav>
 <?php endif; ?>
-

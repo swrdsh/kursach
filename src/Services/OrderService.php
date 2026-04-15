@@ -34,7 +34,7 @@ final class OrderService
 
         return [
             'success' => true,
-            'message' => 'Заявка успешно оформлена. Ответственный сотрудник увидит её в панели заказов.',
+            'message' => 'Заявка успешно оформлена. Ответственный сотрудник увидит её в панели заявок.',
             'equipment' => $equipment,
         ];
     }
@@ -44,4 +44,3 @@ final class OrderService
         return $this->orderRepository->getAdminList();
     }
 }
-

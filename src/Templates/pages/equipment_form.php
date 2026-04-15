@@ -20,7 +20,7 @@ $csrfToken = (string) ($contentData['csrfToken'] ?? '');
                         <h1 class="h3 mb-1"><?= h($heading) ?></h1>
                         <p class="mb-0 opacity-75"><?= h($descriptionText) ?></p>
                     </div>
-                    <a href="<?= h($backLink) ?>" class="btn btn-light">← Назад</a>
+                    <a href="<?= h($backLink) ?>" class="btn btn-light">Назад</a>
                 </div>
             </div>
             <div class="card-body p-4 p-lg-5">
@@ -73,4 +73,3 @@ $csrfToken = (string) ($contentData['csrfToken'] ?? '');
         </div>
     </div>
 </div>
-

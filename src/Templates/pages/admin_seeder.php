@@ -10,8 +10,8 @@ $csrfToken = (string) ($contentData['csrfToken'] ?? '');
     <div class="col-xl-8">
         <div class="card shadow-lg border-0">
             <div class="card-header auth-header">
-                <h1 class="h3 mb-1">Генератор контента (Seeder)</h1>
-                <p class="mb-0 opacity-75">Создание CSV-бэкапа и массовое клонирование записей для проверки пагинации.</p>
+                <h1 class="h3 mb-1">Генератор контента</h1>
+                <p class="mb-0 opacity-75">Создание CSV-бэкапа и массовое клонирование записей для проверки пагинации и поиска.</p>
             </div>
             <div class="card-body p-4 p-lg-5">
                 <?php if ($messageText !== ''): ?>
@@ -48,4 +48,3 @@ $csrfToken = (string) ($contentData['csrfToken'] ?? '');
         </div>
     </div>
 </div>
-

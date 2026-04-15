@@ -5,6 +5,8 @@ ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 error_reporting(E_ALL);
 
+header('Content-Type: text/html; charset=UTF-8');
+
 session_start();
 
 if (empty($_SESSION['csrf_token'])) {

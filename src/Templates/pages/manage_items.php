@@ -13,7 +13,7 @@ $flashType = (string) ($contentData['flashType'] ?? 'info');
 <section class="admin-hero mb-4">
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
         <div>
-            <span class="hero-badge">CRUD</span>
+            <span class="eyebrow eyebrow--dark">CRUD</span>
             <h1 class="display-6 fw-bold mt-3 mb-2">Управление оборудованием</h1>
             <p class="text-secondary mb-0">Редактирование, списание и поиск записей реестра с безопасным удалением через POST.</p>
         </div>
@@ -83,12 +83,12 @@ $flashType = (string) ($contentData['flashType'] ?? 'info');
                                 <td><?= h((string) ($item['purchase_cost'] !== null ? $item['purchase_cost'] . ' ₽' : 'Не указана')) ?></td>
                                 <td>
                                     <div class="d-flex flex-column gap-2">
-                                        <a href="edit_item.php?id=<?= h((string) $item['id']) ?>" class="btn btn-warning btn-sm">✏️ Редактировать</a>
+                                        <a href="edit_item.php?id=<?= h((string) $item['id']) ?>" class="btn btn-warning btn-sm">Редактировать</a>
                                         <form action="delete_item.php" method="POST" onsubmit="return confirm('Вы уверены?');" class="vstack gap-2">
                                             <input type="hidden" name="id" value="<?= h((string) $item['id']) ?>">
                                             <input type="hidden" name="csrf_token" value="<?= h($csrfToken) ?>">
                                             <input type="text" name="writeoff_reason" class="form-control form-control-sm" placeholder="Причина списания" required>
-                                            <button type="submit" class="btn btn-danger btn-sm">🗑️ Удалить</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
                                         </form>
                                     </div>
                                 </td>
@@ -112,4 +112,3 @@ $flashType = (string) ($contentData['flashType'] ?? 'info');
         </ul>
     </nav>
 <?php endif; ?>
-

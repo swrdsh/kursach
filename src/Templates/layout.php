@@ -11,58 +11,42 @@ $currentUser = $authService->getCurrentUser();
     <title><?= htmlspecialchars($title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/app.css" rel="stylesheet">
 </head>
 <body>
+    <div class="site-backdrop"></div>
     <div class="page-shell">
-        <nav class="navbar navbar-expand-lg border-bottom bg-white shadow-sm">
+        <header class="topbar">
             <div class="container">
-                <a class="navbar-brand fw-semibold brand-mark" href="index.php">Office Inventory</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">Главная</a>
-                        </li>
+                <div class="topbar__inner">
+                    <a class="brand-mark" href="index.php">
+                        <span class="brand-mark__badge">OI</span>
+                        <span class="brand-mark__text">Office Inventory</span>
+                    </a>
+
+                    <nav class="main-nav">
+                        <a class="main-nav__link" href="index.php">Главная</a>
                         <?php if ($currentUser === null): ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.php">Вход</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="register.php">Регистрация</a>
-                            </li>
+                            <a class="main-nav__link" href="login.php">Вход</a>
+                            <a class="main-nav__link" href="register.php">Регистрация</a>
                         <?php else: ?>
                             <?php if ($authService->isAdmin()): ?>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="admin_panel.php">Админка</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="manage_items.php">Оборудование</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="admin_orders.php">Заявки</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="admin_seeder.php">Сидер</a>
-                                </li>
+                                <a class="main-nav__link" href="admin_panel.php">Админка</a>
+                                <a class="main-nav__link" href="manage_items.php">Оборудование</a>
+                                <a class="main-nav__link" href="admin_orders.php">Заявки</a>
+                                <a class="main-nav__link" href="admin_seeder.php">Сидер</a>
                             <?php endif; ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="profile.php">Профиль</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-outline-primary px-3 ms-lg-2" href="logout.php">Выход</a>
-                            </li>
+                            <a class="main-nav__link" href="profile.php">Профиль</a>
+                            <a class="main-nav__link main-nav__link--accent" href="logout.php">Выход</a>
                         <?php endif; ?>
-                    </ul>
+                    </nav>
                 </div>
             </div>
-        </nav>
+        </header>
 
-        <main class="py-5">
+        <main class="page-main">
             <div class="container">
                 <?php require $templatePath; ?>
             </div>
@@ -70,4 +54,3 @@ $currentUser = $authService->getCurrentUser();
     </div>
 </body>
 </html>
-

@@ -50,4 +50,3 @@ $old = $contentData['old'] ?? [];
         </div>
     </div>
 </div>
-
